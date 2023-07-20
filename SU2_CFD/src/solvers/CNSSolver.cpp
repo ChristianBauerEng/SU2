@@ -536,9 +536,11 @@ void CNSSolver::BC_HeatFlux_Wall_Generic(const CGeometry* geometry, const CConfi
      And add the contributions to the Jacobian due to energy. ---*/
 
     if (implicit) {
+
+      /*--- DISABLED FOR TESTING ---
       if (kind_boundary == HEAT_TRANSFER){
 
-        /*--- It is necessary to zero the jacobian entries of the energy equation. ---*/
+        //--- It is necessary to zero the jacobian entries of the energy equation. ---
         if (!dynamic_grid)
           for (auto iVar = 0u; iVar < nVar; ++iVar)
             Jacobian_i[nDim+1][iVar] = 0.0;
@@ -549,8 +551,8 @@ void CNSSolver::BC_HeatFlux_Wall_Generic(const CGeometry* geometry, const CConfi
         const su2double dTdrho = oneOnRho * ( -Tinfinity + oneOnCv * 0.5 * Vel2);
         const su2double dTdrhoe = oneOnCv * oneOnRho;
 
-        /*--- Total specific energy: e=c_v*T+1/2*v^2 => T=1/c_v(rho*e/rho - 1/2||rho v||^2/rho^2).
-        Together with cv=R/(gamma-1) the following Jacobian contributions for the energy equation can be derived. ---*/
+        //--- Total specific energy: e=c_v*T+1/2*v^2 => T=1/c_v(rho*e/rho - 1/2||rho v||^2/rho^2).
+        //Together with cv=R/(gamma-1) the following Jacobian contributions for the energy equation can be derived. ---
         Jacobian_i[nDim+1][0] += Transfer_Coefficient * dTdrho * Area;
 
         for (unsigned short iDim = 0; iDim < nDim; iDim++)
@@ -561,8 +563,8 @@ void CNSSolver::BC_HeatFlux_Wall_Generic(const CGeometry* geometry, const CConfi
       }
       if (dynamic_grid || (kind_boundary == HEAT_TRANSFER)) {
         Jacobian.AddBlock2Diag(iPoint, Jacobian_i);
-      }
-
+      } */
+      
       for (auto iVar = 1u; iVar <= nDim; iVar++) {
         auto total_index = iPoint*nVar+iVar;
         Jacobian.DeleteValsRowi(total_index);
